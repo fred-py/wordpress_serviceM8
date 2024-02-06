@@ -1,5 +1,5 @@
 """App initialisation and Flask Blueprint registration"""
-
+import os
 from flask import Flask
 from webhook.webhook import webhook_bp
 import config as Config
