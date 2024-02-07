@@ -14,12 +14,12 @@ class ServiceM8:
 
     #ups = os.getenv('UPS_KEY')
 
-    def __init__(self, name, email, mobile, address, message, servicem8_key: str) -> None:
+    def __init__(self, name, email, mobile, address, description, servicem8_key: str) -> None:
         self.name = name
         self.email = email
         self.mobile = mobile
         self.address = address
-        self.message = message
+        self.description = description
         self.servicem8_key = servicem8_key
 
     def create_job(self) -> str:
@@ -89,5 +89,3 @@ class ServiceM8:
 
 if __name__ == '__main__':
     ServiceM8()
-
-
