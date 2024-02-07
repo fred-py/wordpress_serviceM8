@@ -54,7 +54,7 @@ def webhook_received():
             quote.create_contact(uuid)
         return '', 200
     except Exception as e:
-            print(f"Exception: {e}")
+        print(f"Exception: {e}")
     
 
 
