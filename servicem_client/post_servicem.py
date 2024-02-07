@@ -34,7 +34,7 @@ class ServiceM8:
             "geo_country": "Australia",
             "geo_state": "Western Australia",
                 "status": job_status,
-                "job_description": self.message,
+                "job_description": self.description,
             }
         headers = {
             "accept": "application/json",
