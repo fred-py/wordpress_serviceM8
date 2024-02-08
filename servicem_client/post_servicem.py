@@ -27,7 +27,7 @@ class ServiceM8:
         
         # Create new job
         url = "https://api.servicem8.com/api_1.0/job.json"
-        job_status = 'Unsuccessful'
+        job_status = 'Quote'
         payload = {
             "active": 1,
             "job_address": self.address,
