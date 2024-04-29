@@ -55,7 +55,6 @@ def webhook_received():
         return '', 200
     except Exception as e:
         print(f"Exception: {e}")
-    
 
 
 #if __name__ == '__main__':
