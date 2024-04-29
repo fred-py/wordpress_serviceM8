@@ -17,7 +17,7 @@ class Config:
         ['true', 'on', '1']
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    UNITED_MAIL_SUBJECT_PREFIX = '[United]'
+    UNITED_MAIL_SUBJECT_PREFIX = '[Online Enquiry]'
     UNITED_MAIL_SENDER = 'United Admin <pythonapi2023@gmail.com>'
     PORT = int(os.getenv('PORT', 4242))  # This is needed to deploy on fl0
 

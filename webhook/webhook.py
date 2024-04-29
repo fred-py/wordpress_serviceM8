@@ -15,12 +15,23 @@ from flask import Blueprint, request
 from dotenv import load_dotenv, find_dotenv
 from servicem_client import post_servicem as post
 from pprint import pprint
+from threading import Thread
+from flask import current_app, render_template
+from flask_mail import Mail, Message  # Add missing import statement
 
 load_dotenv(find_dotenv())
 
+"""NOTE: two blueprints are used to separate the mail and webhook, 
+refacture for better readability"""
+
 webhook_bp = Blueprint('webhook', __name__)
 
-servicem8_key = os.getenv('UPS_KEY')
+mail_bp = Blueprint('mail', __name__)
+
+mail = Mail()  # Add this line to create a mail object
+
+to_emails = ['info@unitedpropertyservices.au', 'marketing@unitedropertyservices.au']
+#servicem8_key = os.getenv('UPS_KEY')
 
 #app = Flask(__name__)
 
@@ -44,18 +55,42 @@ def webhook_received():
             suburb = d.get('fields[suburb][value]', None)
             postcode = d.get('fields[postcode][value]', None)
             services = d.get('fields[services][value]', None)
-            message = d.get('fields[message][value]', None)
+            msg = d.get('fields[message][value]', None)
             # Contactnate message & services
             description = message + ' ' + services
             # Concactnate address, suburb and postcode
             full_address = address + ', ' + suburb + ', ' + postcode
-            quote = post.ServiceM8(name, email, mobile, full_address, description, servicem8_key)
-            uuid = quote.create_job()
-            quote.create_contact(uuid)
+            
+            # Concat everything into a single message
+            message = f"Name: {name}\nEmail: {email}\nMobile: {mobile}\nAddress: {full_address}\n Description: {description}"
+            send_email(to_emails, 'New Enquiry', message)
+            """The below is for use with ServiceM8 API, include tha on git for portfolio"""
+            #quote = post.ServiceM8(name, email, mobile, full_address, description, servicem8_key)
+            #uuid = quote.create_job()
+            #quote.create_contact(uuid)
         return '', 200
     except Exception as e:
         print(f"Exception: {e}")
 
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+
+def send_email(to, subject, message):  # , template, **kwargs):
+    """This function is used to send emails asynchronously
+    Note, for bulk emails using celery task queue is recommended"""
+    app = current_app._get_current_object()  # Get the actual Flask app object
+    msg = Message(current_app.config['UNITED_MAIL_SUBJECT_PREFIX'] + ' ' + subject,
+                  sender=current_app.config['UNITED_MAIL_SENDER'],
+                  recipients=[to])
+    msg.body = msg
+    #msg.body = render_template(template + '.txt', **kwargs)
+    #msg.html = render_template(template + '.html', **kwargs)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
 
 #if __name__ == '__main__':
 #    app.run(port=4040, debug=True)
