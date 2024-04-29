@@ -57,7 +57,7 @@ def webhook_received():
             services = d.get('fields[services][value]', None)
             msg = d.get('fields[message][value]', None)
             # Contactnate message & services
-            description = message + ' ' + services
+            description = msg + ' ' + services
             # Concactnate address, suburb and postcode
             full_address = address + ', ' + suburb + ', ' + postcode
             
