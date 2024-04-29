@@ -1,8 +1,8 @@
 """App initialisation and Flask Blueprint registration"""
 import os
 from flask import Flask
-from webhook.webhook import webhook_bp
-from mail.mail import mail_bp, mail
+from webhook.webhook import webhook_bp, mail_bp, mail
+#from mail.mail import mail_bp, mail
 import config as Config
 
 
