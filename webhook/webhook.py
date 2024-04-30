@@ -30,7 +30,7 @@ mail_bp = Blueprint('mail', __name__)
 
 mail = Mail()  # Add this line to create a mail object
 
-to_emails = ['8de895@inbox.servicem8.com', 'info@unitedpropertyservices.au', 'marketing@unitedropertyservices.au']
+to_emails = '8de895@inbox.servicem8.com', 'info@unitedpropertyservices.au', 'marketing@unitedropertyservices.au'
 #servicem8_key = os.getenv('UPS_KEY')
 
 #app = Flask(__name__)
