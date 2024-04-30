@@ -30,9 +30,9 @@ mail_bp = Blueprint('mail', __name__)
 
 mail = Mail()  # Add this line to create a mail object
 
-to_servicem8 = ('', '8de895@inbox.servicem8.com')
-to_info = ('', 'info@unitedpropertyservices.au')
-to_mkt = ('', 'marketing@unitedropertyservices.au')
+to_servicem8 = '8de895@inbox.servicem8.com'
+to_info = 'info@unitedpropertyservices.au'
+to_mkt = 'marketing@unitedropertyservices.au'
 #servicem8_key = os.getenv('UPS_KEY')
 
 #app = Flask(__name__)
@@ -65,6 +65,7 @@ def webhook_received():
             
             # Concat everything into a single message
             message = f"Name: {name}\nEmail: {email}\nMobile: {mobile}\nAddress: {full_address}\n Description: {description}"
+            print('We are here just before the send_email function-AAAAHHHHHHHHHHHHHGGHHG')
             send_email(to_servicem8, 'New Enquiry', message)
             send_email(to_info, 'New Enquiry', message)
             send_email(to_mkt, 'New Enquiry', message)
